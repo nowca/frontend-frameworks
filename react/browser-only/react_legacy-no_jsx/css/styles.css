@@ -1,0 +1,54 @@
+body {
+    padding-left: 32px;
+}
+
+* {
+    font-family: Arial;
+    font-size: 13px;
+    margin: 8px 0 8px 0;
+}
+
+h1 {
+    font-size: 18px;
+}
+
+h2 {
+    margin: 16px 0 16px 0;
+}
+
+.blue {
+    color: #0055ff !important;
+}
+
+.code {
+    font-family: monospace;
+    color: #555555;
+}
+
+.block {
+    display: inline-block; 
+    background-color: #eeeeee;
+    padding: 12px;
+}
+
+.react-component-block {
+    display: inline-block; 
+    float: left;
+    clear: left;
+    background-color: #eeeeee;
+    padding: 2px;
+    border: 1px solid #eeeeee;
+}
+
+.react-component-block * {
+    padding: 16px;
+    margin: 0;
+    background-color: #ffffff;
+}
+
+.react-component-block-title {
+    color: #777777;
+    background-color: #eeeeee !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+}   

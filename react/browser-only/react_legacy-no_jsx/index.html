@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Basic legacy React example</title>
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+    <body>
+        <h2>Basic legacy React example</h2>
+        <p>This page demonstrates using React v15.0 froḿ 2016 without build tools.</p>
+        <p><a href="https://legacy.reactjs.org/blog/2016/04/07/react-v15.html">https://legacy.reactjs.org/blog/2016/04/07/react-v15.html</a></p>
+        <br>
+        <p>React is loaded as .js files in script tags.</p>
+        <p class="code block">
+            &lt;script src="libs/react.production.min.js"&gt;&lt;/script&gt;<br>
+            &lt;script src="libs/react-dom.production.min.js"&gt;&lt;/script&gt;
+        </p>
+        <p>Source:</p>
+        <p><a href="https://cdnjs.com/libraries/react/15.0.0">https://cdnjs.com/libraries/react/15.0.0</a></p>
+        <p><a href="https://cdnjs.com/libraries/react/15.0.0">https://cdnjs.com/libraries/react-dom/15.0.0</a></p>
+        <br>
+        <br>
+        <p>React components using <span class="blue code">React.createElement()</span>:</p>
+
+        <div id="react-root"></div>
+
+        <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+        <script src="libs/react.v15-0-0.development.umd.js"></script>
+        <script src="libs/react-dom.v15-0-0.development.umd.js"></script>
+        <!--script src="libs/react.v15-0-0.production.min.umd.js"></script>
+        <script src="libs/react-dom.v15-0-0.production.min.umd.js"></script-->
+
+        <!-- Load our React component. -->
+        <script src="js/app.js"></script>
+    </body>
+</html>
