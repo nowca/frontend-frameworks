@@ -1,0 +1,19 @@
+@use 'sass:color';
+
+$myColor: #ff00ff;
+
+.moduleClass h1 {
+  color: $myColor;
+}
+
+.moduleClass h2 {
+  color: color.adjust($myColor, $lightness: -20%);
+}
+
+.moduleClass h3 {
+  color: color.adjust($myColor, $lightness: 20%);
+}
+
+.test {
+  display:none;
+}
