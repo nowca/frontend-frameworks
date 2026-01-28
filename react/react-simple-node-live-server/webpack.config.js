@@ -39,7 +39,7 @@ module.exports = {
                 // use: ['style-loader', 'css-loader'], // rewrite engine
                 use: [
                     { loader: "style-loader", options: { injectType: "linkTag" } },
-                    { loader: "css-loader" },
+                    { loader: "css-loader", options: { modules: false } },
                 ]
             },
             {
