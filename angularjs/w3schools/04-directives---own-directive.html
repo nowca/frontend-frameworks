@@ -1,0 +1,47 @@
+ <!DOCTYPE html>
+<html lang="en-US">
+<script src="lib/angularjs.v1-6-9.min.js"></script>
+<body ng-app="myApp">
+    <!--
+        In addition to all the built-in AngularJS directives, you can create your own directives.
+
+        New directives are created by using the .directive function.
+
+        To invoke the new directive, make an HTML element with the same tag name as the new directive.
+
+        When naming a directive, you must use a camel case name, w3TestDirective, but when invoking it, you must use - separated name, w3-test-directive:
+    -->
+
+    <w3-test-directive></w3-test-directive>
+
+    <div w3-test-directive></div>
+
+    <div class="w3-test-directive"></div>
+
+    <!-- directive: w3-test-directive -->
+
+
+    <script>
+        var app = angular.module("myApp", []);
+        app.directive("w3TestDirective", function() {
+            return {
+                restrict : "EACM",
+                replace : true, // We've added the replace property in this example, otherwise the comment would be invisible.
+                template : "<h1>Made by a directive!</h1>"
+            };
+        });
+
+        /*
+            The legal restrict values are:
+
+            E for Element name
+            A for Attribute
+            C for Class
+            M for Comment
+
+            By default the value is EA, meaning that both Element names and attribute names can invoke the directive.
+        */
+    </script>
+
+</body>
+</html> 

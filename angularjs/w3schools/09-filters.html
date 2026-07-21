@@ -1,0 +1,132 @@
+ <!DOCTYPE html>
+<html lang="en-US">
+<script src="lib/angularjs.v1-6-9.min.js"></script>
+<body ng-app="myApp">
+    <!--
+        AngularJS provides filters to transform data:
+
+        currency Format a number to a currency format.
+        date Format a date to a specified format.
+        filter Select a subset of items from an array.
+        json Format an object to a JSON string.
+        limitTo Limits an array/string, into a specified number of elements/characters.
+        lowercase Format a string to lower case.
+        number Format a number to a string.
+        orderBy Orders an array by an expression.
+        uppercase Format a string to upper case.
+    -->
+    <div ng-controller="personCtrl">
+        <p>The name is {{ lastName | uppercase }}</p>
+    </div>
+
+    <!-- Filters are added to directives, like ng-repeat, by using the pipe character |, followed by a filter: -->
+    <div ng-app="myApp" ng-controller="namesCtrl">
+        <p>Looping with objects:</p>
+        <ul>
+            <li ng-repeat="x in names | orderBy:'country'">
+                {{ x.name + ', ' + x.country }}
+            </li>
+        </ul>
+
+        <!--
+            The filter filter selects a subset of an array.
+
+            The filter filter can only be used on arrays, and it returns an array containing only the matching items.
+        -->
+        <ul>
+            <li ng-repeat="x in names | filter : 'i'">
+                {{ x.name }}
+            </li>
+        </ul>
+
+        <!--
+            Filter an Array Based on User Input
+
+            sBy setting the ng-model directive on an input field, we can use the value of the input field as an expression in a filter.
+        -->
+        <p><input type="text" ng-model="test"></p>
+
+        <ul>
+            <li ng-repeat="x in names | filter : test">
+                {{ x.name + ', ' + x.country }}
+            </li>
+        </ul>
+
+        <!--
+            Sort an Array Based on User Input
+
+            By adding the ng-click directive on the table headers, we can run a function that changes the sorting order of the array
+        -->
+        <table border="1" width="100%">
+            <tr>
+                <th ng-click="orderByMe('name')">Name</th>
+                <th ng-click="orderByMe('country')">Country</th>
+            </tr>
+            <tr ng-repeat="x in names | orderBy:myOrderBy">
+                <td>{{x.name}}</td>
+                <td>{{x.country}}</td>
+            </tr>
+        </table>
+
+        <!--
+            Custom Filters
+
+            You can make your own filters by registering a new filter factory function with your module:
+        -->
+        <ul ng-controller="namesCtrl">
+            <li ng-repeat="x in names">
+                {{x.name | myFormat}}
+            </li>
+        </ul>
+    </div>
+
+    <div ng-controller="costCtrl">
+        <h1>Price: {{ price | currency: "₿" }}</h1>
+        <h1>Price: {{ (price | number:2) + "€" }}</h1>
+    </div> 
+
+    <script>
+        var app = angular.module('myApp', []);
+
+        app.controller('personCtrl', function($scope) {
+            $scope.firstName = "John",
+            $scope.lastName = "Doe"
+        });
+
+        app.controller('namesCtrl', function($scope) {
+            $scope.names = [
+                {name:'Jani',country:'Norway'},
+                {name:'Carl',country:'Sweden'},
+                {name:'Margareth',country:'England'},
+                {name:'Hege',country:'Norway'},
+                {name:'Joe',country:'Denmark'},
+                {name:'Gustav',country:'Sweden'},
+                {name:'Birgit',country:'Denmark'},
+                {name:'Mary',country:'England'},
+                {name:'Kai',country:'Norway'}
+                ];
+            $scope.orderByMe = function(x) {
+                $scope.myOrderBy = x;
+            }
+        });
+
+        app.controller('costCtrl', function($scope) {
+            $scope.price = 58;
+        });
+
+        app.filter('myFormat', function() {
+            return function(x) {
+                var i, c, txt = "";
+                for (i = 0; i < x.length; i++) {
+                    c = x[i];
+                    if (i % 2 == 0) {
+                        c = c.toUpperCase();
+                    }
+                    txt += c;
+                }
+                return txt;
+            };
+        });
+    </script>
+</body>
+</html> 

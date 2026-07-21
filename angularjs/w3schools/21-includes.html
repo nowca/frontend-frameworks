@@ -1,0 +1,43 @@
+ <!DOCTYPE html>
+<html lang="en-US">
+<script src="lib/angularjs.v1-6-9.min.js"></script>
+<body ng-app="myApp">
+    <!--
+        With AngularJS, you can include HTML from an external file.
+        AngularJS Includes
+
+        With AngularJS, you can include HTML content using the ng-include directive.
+
+        The HTML files you include with the ng-include directive, can also contain AngularJS code:
+    -->
+    <div ng-include="'myFile.htm'"></div>
+
+    <div ng-app="myApp" ng-controller="customersCtrl"> 
+        <div ng-include="'myTable.htm'"></div>
+    </div>
+
+    <!-- Include the file "myTable.htm" in your web page, and all AngularJS code will be executed, even the code inside the included file: -->
+    <script>
+        var app = angular.module('myApp', []);
+        /*
+            Include Cross Domains
+
+            By default, the ng-include directive does not allow you to include files from other domains.
+
+            To include files from another domain, you can add a whitelist of legal files and/or domains in the config function of your application:
+        */
+        app.config(function($sceDelegateProvider) {
+            $sceDelegateProvider.resourceUrlWhitelist([
+                'https://tryit.w3schools.com/**'
+            ]);
+        });
+        app.controller('customersCtrl', function($scope, $http) {
+            $http.get("customers.php").then(function (response) {
+                $scope.names = response.data.records;
+            });
+        });
+    </script>
+
+    <p>The HTML, and AngularJS code, for this table are located in the file "myTable.htm".</p>
+</body>
+</html> 

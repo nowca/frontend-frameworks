@@ -1,0 +1,85 @@
+ <!DOCTYPE html>
+<html lang="en-US">
+<script src="lib/angularjs.v1-6-9.min.js"></script>
+<style>
+    table, th , td {
+        border: 1px solid grey;
+        border-collapse: collapse;
+        padding: 5px;
+    }
+
+    table tr:nth-child(odd) {
+        background-color: #f1f1f1;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+</style> 
+<body ng-app="myApp">
+
+    <div ng-controller="customersCtrl"> 
+        <table>
+            <tr ng-repeat="x in names">
+                <td>{{ x.name }}</td>
+                <td>{{ x.country }}</td>
+            </tr>
+        </table>
+        <br>
+        <p>Ordered by country:</p>
+        <!-- To sort the table, add an orderBy filter: -->
+        <table>
+            <tr ng-repeat="x in names | orderBy : 'country'">
+                <td>{{ x.name }}</td>
+                <td>{{ x.country }}</td>
+            </tr>
+        </table>
+        <br>
+        <p>Displayed with uppercase-filter:</p>
+        <!-- To display uppercase, add an uppercase filter: -->
+        <table>
+            <tr ng-repeat="x in names">
+                <td>{{ x.name }}</td>
+                <td>{{ x.country | uppercase }}</td>
+            </tr>
+        </table>
+        <br>
+        <p>Displayed with index:</p>
+        <!-- To display the table index, add a <td> with $index: -->
+        <table>
+            <tr ng-repeat="x in names">
+                <td>{{ $index + 1 }}</td>
+                <td>{{ x.name }}</td>
+                <td>{{ x.country }}</td>
+            </tr>
+        </table>
+        <br>
+        <!--p>Using $even and $odd:</p>
+        <table>
+            <tr ng-repeat="x in names">
+                <td ng-if="$odd" style="background-color:#f1f1f1">{{ x.name }}</td>
+                <td ng-if="$even">{{ x.name }}</td>
+                <td ng-if="$odd" style="background-color:#f1f1f1">{{ x.country }}</td>
+                <td ng-if="$even">{{ x.country }}</td>
+            </tr>
+        </table--> 
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('customersCtrl', function($scope, $http) {
+            $scope.names = [
+                {name:'Jani',country:'Norway'},
+                {name:'Carl',country:'Sweden'},
+                {name:'Margareth',country:'England'},
+                {name:'Hege',country:'Norway'},
+                {name:'Joe',country:'Denmark'},
+                {name:'Gustav',country:'Sweden'},
+                {name:'Birgit',country:'Denmark'},
+                {name:'Mary',country:'England'},
+                {name:'Kai',country:'Norway'}
+            ];
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,114 @@
+ <!DOCTYPE html>
+<html lang="en-US">
+<script src="lib/angularjs.v1-6-9.min.js"></script>
+<body ng-app="myApp">
+    <!--
+        $http is an AngularJS service for reading data from remote servers.
+
+        The AngularJS $http service makes a request to the server, and returns a response.
+    -->
+    <div ng-controller="httpCtrl">
+        <p>Today's welcome message is:</p>
+        <h1>{{myWelcome}}</h1>
+    </div>
+
+    <div ng-controller="httpRequestCtrl"> 
+        <p>Today's welcome message is:</p>
+        <h1>{{myWelcome}}</h1>
+    </div>
+
+    <p>The $http service requests a page on the server, and the response is set as the value of the "myWelcome" variable.</p>
+
+    <div ng-controller="httpResponseCtrl"> 
+        <p>Data : {{content}}</p>
+        <p>Status : {{statuscode}}</p>
+        <p>StatusText : {{statustext}}</p>
+    </div>
+
+    <!--div ng-controller="jsonRequestCtrl">
+        <ul>
+            <li ng-repeat="x in myData">
+                {{ x.Name + ', ' + x.Country }}
+            </li>
+        </ul>
+    </div-->
+
+    <script>
+        var app = angular.module('myApp', []);
+
+        app.controller('httpCtrl', function($scope, $http) {
+            $http.get("welcome.htm").then(function(response) {
+                $scope.myWelcome = response.data;
+            },
+            function(response) {
+                $scope.myWelcome = response.xhrStatus;
+            });
+        });
+
+
+        /*
+            The example above uses the .get method of the $http service.
+            The .get method is a shortcut method of the $http service.
+            There are several shortcut methods:
+
+                .delete()
+                .get()
+                .head()
+                .jsonp()
+                .patch()
+                .post()
+                .put()
+
+            The methods above are all shortcuts of calling the $http service:
+        */
+        app.controller('httpRequestCtrl', function($scope, $http) {
+            $http({
+                method : "GET",
+                url : "welcome.htm"
+            }).then(function mySuccess(response) {
+                $scope.myWelcome = response.data;
+            }, function myError(response) {
+                $scope.myWelcome = response.xhrStatus;
+            });
+            // The example above executes the $http service with an object as an argument.
+            // The object is specifying the HTTP method, the url, what to do on success, and what to do on failure.
+        });
+
+        /*
+            The response from the server is an object with these properties:
+
+            .config the object used to generate the request.
+            .data a string, or an object, carrying the response from the server.
+            .headers a function to use to get header information.
+            .status a number defining the HTTP status.
+            .statusText a string defining the HTTP status.
+        */
+        app.controller('httpResponseCtrl', function($scope, $http) {
+                $http.get("welcome.htm").then(function(response) {
+                    $scope.content = response.data;
+                    $scope.statuscode = response.status;
+                    $scope.statustext = response.statusText;
+                }, function(response) {
+                    // Second function handles error
+                    $scope.content = "Something went wrong";
+                });
+                // To handle errors, add one more functions to the .then method:
+        });
+
+        /*
+            JSON
+
+            The data you get from the response is expected to be in JSON format.
+
+            JSON is a great way of transporting data, and it is easy to use within AngularJS, or any other JavaScript.
+
+            Example: On the server we have a file that returns a JSON object containing 15 customers, all wrapped in array called records.
+        */
+        /*app.controller('jsonREquestCtrl', function($scope, $http) {
+            $http.get("customers.php").then(function (response) {
+                $scope.myData = response.data.records;
+            });
+        });*/
+    </script> 
+</body>
+</html> 

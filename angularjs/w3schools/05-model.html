@@ -1,0 +1,57 @@
+ <!DOCTYPE html>
+<html lang="en-US">
+<script src="lib/angularjs.v1-6-9.min.js"></script>
+ <style>
+    input.ng-invalid {
+        background-color: lightblue;
+    }
+</style>
+<body>
+    <!--
+        The ng-model directive binds the value of HTML controls (input, select, textarea) to application data.
+        The ng-model Directive
+
+        With the ng-model directive you can bind the value of an input field to a variable created in AngularJS.
+    -->
+    <div ng-app="myApp" ng-controller="myCtrl">
+        Name: <input ng-model="name">
+        <h1>You entered: {{name}}</h1> <!-- Two-Way Binding -->
+
+        <form name="myForm">
+            Email:
+            <input type="email" name="myAddress" ng-model="text">
+
+            <!-- the span will be displayed only if the expression in the ng-show attribute returns true. -->
+            <span ng-show="myForm.myAddress.$error.email">Not a valid e-mail address</span>
+
+            <!-- The ng-model directive can provide status for application data (valid, dirty, touched, error): -->
+            <h1>Status</h1>
+            <p>Valid: {{myForm.myAddress.$valid}} (if true, the value meets all criteria).</p>
+            <p>Dirty: {{myForm.myAddress.$dirty}} (if true, the value has been changed).</p>
+            <p>Touched: {{myForm.myAddress.$touched}} (if true, the field has been in focus).</p>
+        </form>
+
+        <!-- The ng-model directive provides CSS classes for HTML elements, depending on their status: -->
+        Enter your name:
+        <input name="myName" ng-model="myText" required>
+        <!--
+            ng-empty
+            ng-not-empty
+            ng-touched
+            ng-untouched
+            ng-valid
+            ng-invalid
+            ng-dirty
+            ng-pending
+            ng-pristine
+        -->
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function($scope) {
+            $scope.name = "John Doe";
+        });
+    </script>
+</body>
+</html> 

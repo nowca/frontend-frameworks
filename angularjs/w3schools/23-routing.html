@@ -1,0 +1,77 @@
+ <!DOCTYPE html>
+<html lang="en-US">
+<script src="lib/angularjs.v1-6-9.min.js"></script>
+<!-- To make your applications ready for routing, you must include the AngularJS Route module: -->
+<script src="lib/angular-route.v1-6-9.min.js"></script>
+<body ng-app="myApp">
+    <!--
+        The ngRoute module helps your application to become a Single Page Application.
+
+        If you want to navigate to different pages in your application, but you also want the application to be a SPA (Single Page Application), with no page reloading, you can use the ngRoute module.
+
+        The ngRoute module routes your application to different pages without reloading the entire application.
+    -->
+    
+    <p><a href="#/!">Main</a></p>
+
+    <a href="#!red">Red</a>
+    <a href="#!green">Green</a>
+    <a href="#!blue">Blue</a>
+    <a href="#!banana">Banana</a>
+    <a href="#!tomato">Tomato</a>
+
+    <div ng-view></div>
+    <!--ng-view></ng-view>
+    <div class="ng-view"></div--> 
+
+    <script>
+        // You must add the ngRoute as a dependency in the application module:
+        var app = angular.module("myApp", ["ngRoute"]);
+
+        // Use the $routeProvider to configure different routes in your application.
+        // Define the $routeProvider using the config method of your application:
+        app.config(function($routeProvider) {
+            $routeProvider
+                .when("/", {
+                    template : "<h1>Main</h1><p>Click on the links to change this content</p>"
+                })
+                .when("/red", {
+                    templateUrl : "red.htm"
+                })
+                .when("/green", {
+                    templateUrl : "green.htm"
+                })
+                .when("/blue", {
+                    templateUrl : "blue.htm"
+                })
+                // With the $routeProvider you can also define a controller for each "view".
+                .when("/london", {
+                    templateUrl : "london.htm",
+                    controller : "londonCtrl"
+                })
+                .when("/paris", {
+                    templateUrl : "paris.htm",
+                    controller : "parisCtrl"
+                })
+                // You can also use the template property, which allows you to write HTML directly in the property value, and not refer to a page.
+                .when("/banana", {
+                    template : "<h1>Banana</h1><p>Bananas contain around 75% water.</p>"
+                })
+                .when("/tomato", {
+                    template : "<h1>Tomato</h1><p>Tomatoes contain around 95% water.</p>"
+                });
+                // You can also use the otherwise method, which is the default route when none of the others get a match.
+                .otherwise({
+                    template : "<h1>None</h1><p>Nothing has been selected</p>"
+                });
+        });
+
+        app.controller("londonCtrl", function ($scope) {
+            $scope.msg = "I love London";
+        });
+        app.controller("parisCtrl", function ($scope) {
+            $scope.msg = "I love Paris";
+        });
+    </script>
+</body>
+</html> 

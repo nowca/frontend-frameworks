@@ -1,0 +1,200 @@
+ <!DOCTYPE html>
+<html lang="en-US">
+<script src="lib/angularjs.v1-6-9.min.js"></script>
+<style>
+    input.ng-invalid {
+        background-color:#ffdddd;
+    }
+    input.ng-valid {
+        background-color:#ddffdd;
+    }
+    form.ng-pristine {
+        background-color: lightblue;
+    }
+    form.ng-dirty {
+        background-color: pink;
+    }
+</style>
+<body ng-app="myApp">
+    <!--
+        AngularJS can validate input data.
+        Form Validation
+
+        AngularJS offers client-side form validation.
+
+        AngularJS monitors the state of the form and input fields (input, textarea, select), and lets you notify the user about the current state.
+
+        AngularJS also holds information about whether they have been touched, or modified, or not.
+
+        You can use standard HTML5 attributes to validate input, or you can make your own validation functions.
+
+        Use the HTML5 attribute required to specify that the input field must be filled out:
+    -->
+    <p>Try writing in the input field:</p>
+
+    <form name="myForm">
+        <input name="myInput" ng-model="myInput" required>
+    </form>
+    <p>The input's valid state is:</p>
+    <h1>{{myForm.myInput.$valid}}</h1>
+
+    <!-- Use the HTML5 type email to specify that the value must be an e-mail: -->
+    <p>Try writing an E-mail address in the input field:</p>
+
+    <form name="myForm2">
+        <input type="email" name="myInput2" ng-model="myInput2">
+    </form>
+
+    <p>The input's valid state is:</p>
+    <h1>{{myForm2.myInput2.$valid}}</h1>
+    <p>Note that the state of the input field is "true" before you start writing in it, even if it does not contain an e-mail address.</p>
+
+    <!--
+        Form State and Input State
+
+        AngularJS is constantly updating the state of both the form and the input fields.
+
+        Input fields have the following states:
+
+            $untouched The field has not been touched yet
+            $touched The field has been touched
+            $pristine The field has not been modified yet
+            $dirty The field has been modified
+            $invalid The field content is not valid
+            $valid The field content is valid
+
+        They are all properties of the input field, and are either true or false.
+
+        Forms have the following states:
+
+            $pristine No fields have been modified yet
+            $dirty One or more have been modified
+            $invalid The form content is not valid
+            $valid The form content is valid
+            $submitted The form is submitted
+
+        They are all properties of the form, and are either true or false.
+
+        You can use these states to show meaningful messages to the user. Example, if a field is required, and the user leaves it blank, you should give the user a warning:
+
+        Show an error message if the field has been touched AND is empty:
+    -->
+    <p>Try leaving the first input field blank:</p>
+
+    <form name="myForm3">
+        <p>Name:
+            <input name="myName3" ng-model="myName3" required>
+            <span ng-show="myForm3.myName3.$touched && myForm3.myName3.$invalid">The name is required.</span>
+        </p>
+
+        <p>Address:
+            <input name="myAddress" ng-model="myAddress" required>
+        </p>
+    </form>
+
+    <p>We use the ng-show directive to only show the error message if the field has been touched AND is empty.</p>
+
+    <!--
+        AngularJS adds CSS classes to forms and input fields depending on their states.
+
+        The following classes are added to, or removed from, input fields:
+
+            ng-untouched The field has not been touched yet
+            ng-touched The field has been touched
+            ng-pristine The field has not been  modified yet
+            ng-dirty The field has been modified
+            ng-valid The field content is valid
+            ng-invalid The field content is not valid
+            ng-valid-key One key for each validation. Example: ng-valid-required, useful when there are more than one thing that must be validated
+            ng-invalid-key Example: ng-invalid-required
+
+        The following classes are added to, or removed from, forms:
+
+            ng-pristine No fields has not been modified yet
+            ng-dirty One or more fields has been modified
+            ng-valid The form content is valid
+            ng-invalid The form content is not valid
+            ng-valid-key One key for each validation. Example: ng-valid-required, useful when there are more than one thing that must be validated
+            ng-invalid-key Example: ng-invalid-required
+
+        The classes are removed if the value they represent is false.
+
+        Add styles for these classes to give your application a better and more intuitive user interface.
+    -->
+    <p>Try writing in the input field:</p>
+
+    <form name="myForm4">
+        <input name="myName4" ng-model="myName4" required>
+    </form>
+
+    <p>The input field requires content, and will therefore become green when you write in it.</p>
+
+    <!--
+        Custom Validation
+
+        To create your own validation function is a bit more tricky; You have to add a new directive to your application, and deal with the validation inside a function with certain specified arguments.
+
+        Create your own directive, containing a custom validation function, and refer to it by using my-directive.
+
+        The field will only be valid if the value contains the character "e":
+    -->
+    <p>Try writing in the input field:</p>
+
+    <form ng-app="myApp" name="myForm5">
+        <input name="myInput5" ng-model="myInput5" my-directive>
+    </form>
+
+    <p>The input's valid state is:</p>
+    <h1>{{myForm5.myInput5.$valid}}</h1>
+    <p>The input field must contain the character "e" to be consider valid.</p>
+
+    <h2>Validation Example</h2>
+
+    <form ng-app="myApp" ng-controller="validateCtrl" name="myForm" novalidate>
+        <p>Username:<br>
+            <input type="text" name="user" ng-model="user" required>
+            <span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid">
+                <span ng-show="myForm.user.$error.required">Username is required.</span>
+            </span>
+        </p>
+
+        <p>Email:<br>
+            <input type="email" name="email" ng-model="email" required>
+            <span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+                <span ng-show="myForm.email.$error.required">Email is required.</span>
+                <span ng-show="myForm.email.$error.email">Invalid email address.</span>
+            </span>
+        </p>
+
+        <p>
+            <input type="submit" ng-disabled="myForm.user.$dirty && myForm.user.$invalid || myForm.email.$dirty && myForm.email.$invalid">
+        </p>
+    </form>
+
+    <script>
+        var app = angular.module('myApp', []);
+
+        var app = angular.module('myApp', []);
+        app.directive('myDirective', function() {
+            return {
+                require: 'ngModel',
+                link: function(scope, element, attr, mCtrl) {
+                    function myValidation(value) {
+                        if (value.indexOf("e") > -1) {
+                            mCtrl.$setValidity('charE', true);
+                        } else {
+                            mCtrl.$setValidity('charE', false);
+                        }
+                        return value;
+                    }
+                    mCtrl.$parsers.push(myValidation);
+                }
+            };
+        });
+        app.controller('validateCtrl', function($scope) {
+            $scope.user = 'John Doe';
+            $scope.email = 'john.doe@gmail.com';
+        });
+    </script>
+</body>
+</html> 

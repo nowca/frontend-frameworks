@@ -1,0 +1,128 @@
+ <!DOCTYPE html>
+<html lang="en-US">
+<script src="lib/angularjs.v1-6-9.min.js"></script>
+<body ng-app="myApp">
+    <!--
+        Forms in AngularJS provides data-binding and validation of input controls.
+        Input Controls
+
+        Input controls are the HTML input elements:
+
+            input elements
+            select elements
+            button elements
+            textarea elements
+    -->
+    <div ng-controller="formCtrl">
+        <form>
+            <!-- Input controls provides data-binding by using the ng-model directive. -->
+            First Name: <input type="text" ng-model="firstname">
+
+            <br><br>
+            <!--
+                A checkbox has the value true or false.
+
+                Apply the ng-model directive to a checkbox, and use its value in your application.
+            -->
+            Check to show a header: <input type="checkbox" ng-model="myVar">
+
+            <br><br>
+            <!-- Display some text, based on the value of the selected radio button: -->
+            Pick a topic:
+            <input type="radio" ng-model="myVar" value="dogs">Dogs
+            <input type="radio" ng-model="myVar" value="tuts">Tutorials
+            <input type="radio" ng-model="myVar" value="cars">Cars
+
+            <br><br>
+            <!--
+                Bind select boxes to your application with the ng-model directive.
+
+                The property defined in the ng-model attribute will have the value of the selected option in the selectbox.
+            -->
+            Select a topic:
+            <select ng-model="myVar2">
+                <option value="">
+                <option value="dogs">Dogs
+                <option value="tuts">Tutorials
+                <option value="cars">Cars
+            </select>
+        </form>
+
+        <h1>You entered: {{firstname}}</h1>
+        <h1 ng-show="myVar">My Header</h1>
+
+        <!--
+            Bind radio buttons to your application with the ng-model directive.
+
+            Radio buttons with the same ng-model can have different values, but only the selected one will be used.
+        -->
+        <div ng-switch="myVar">
+            <div ng-switch-when="dogs">
+                <h1>Dogs</h1>
+                <p>Welcome to a world of dogs.</p>
+            </div>
+            <div ng-switch-when="tuts">
+                <h1>Tutorials</h1>
+                <p>Learn from examples.</p>
+            </div>
+            <div ng-switch-when="cars">
+                <h1>Cars</h1>
+                <p>Read about cars.</p>
+            </div>
+        </div>
+
+        <p>The ng-switch directive hides and shows HTML sections depending on the value of the radio buttons.</p>
+
+        <div ng-switch="myVar2">
+            <div ng-switch-when="dogs">
+                <h1>Dogs</h1>
+                <p>Welcome to a world of dogs.</p>
+            </div>
+            <div ng-switch-when="tuts">
+                <h1>Tutorials</h1>
+                <p>Learn from examples.</p>
+            </div>
+                <div ng-switch-when="cars">
+                <h1>Cars</h1>
+                <p>Read about cars.</p>
+            </div>
+        </div>
+
+        <p>The ng-switch directive hides and shows HTML sections depending on the value of the dropdown list.</p>
+    </div>
+
+    <div ng-controller="form2Ctrl">
+        <form novalidate>
+            First Name:<br>
+            <input type="text" ng-model="user.firstName"><br>
+            Last Name:<br>
+            <input type="text" ng-model="user.lastName">
+            <br><br>
+            <button ng-click="reset()">RESET</button>
+        </form>
+        <p>form = {{user}}</p>
+        <p>master = {{master}}</p>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('formCtrl', function($scope) {
+            /*
+                The application does now have a property named firstname.
+
+                The ng-model directive binds the input controller to the rest of your application.
+
+                The property firstname, can be referred to in a controller:
+            */
+            $scope.firstname = "John";
+        });
+        app.controller('form2Ctrl', function($scope) {
+            $scope.master = {firstName:"John", lastName:"Doe"};
+            $scope.reset = function() {
+                $scope.user = angular.copy($scope.master);
+            };
+            $scope.reset();
+        });
+    </script>
+</body>
+</html> 
